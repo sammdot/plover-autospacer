@@ -3,6 +3,13 @@ from threading import Thread
 from plover.steno import Stroke
 from plover.translation import Translation
 
+SYSTEM_NAMES = [
+  "Japanese",
+  "Chinese",
+  "Cantonese",
+  "Thai",
+]
+
 class AutoSpacer(Thread):
 
   def __init__(self, engine):
@@ -19,7 +26,7 @@ class AutoSpacer(Thread):
 
   @staticmethod
   def needs_zero_space(system):
-    return "Japanese" in system or "Chinese" in system
+    return any(name in system for name in SYSTEM_NAMES)
 
   def _on_config_changed(self, _):
     tl = Translation([Stroke([])],
